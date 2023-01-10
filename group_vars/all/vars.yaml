@@ -1,0 +1,58 @@
+user:
+  name: mimi07
+  password: this+is-a+strong_one
+  groups: users,wheel,audio,video
+
+storage:
+  install: /dev/sda
+  label: gpt # gpt / msdos
+  partitions:
+    boot:
+      name: boot
+      number: 1
+      size: 256
+      filesystem: vfat
+    swap:
+      name: swap
+      number: 2
+      size: 8192
+      filesystem: swap
+    root: 
+      name: root
+      number: 3
+      size: 100 # 100% (the rest of the drive)
+      filesystem: ext4
+
+compiling_options:
+  common_flags: -march=native -O2 -pipe
+  makeopts: 0
+  efi_grub: true
+  use_flags: X elogind -systemd
+  video_cards: intel
+  mirrors: http://gentoo.mirrors.ovh.net/gentoo-distfiles/
+
+portage_options:
+  profile: 1
+
+timezone: Europe/Bucharest
+
+locale: | 
+  en_US ISO-8859-1 
+  en_US.UTF-8 UTF-8
+locale_set: en_US.utf8
+
+kernel: manual # manual, genkernel
+
+hostname: gentoo
+
+hosts: |
+  example.com           example
+
+
+#
+# configuring
+#
+
+wifi:
+  ssid: "EXAMPLE WIFI NAME"
+  password: "EXAMPLE WIFI PASSWORD"

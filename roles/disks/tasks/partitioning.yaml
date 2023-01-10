@@ -1,0 +1,69 @@
+- name: Creating the EFI system partition (ESP)
+  ansible.builtin.parted:
+    device: "{{ storage.install }}"
+    label: "{{ storage.label }}"
+    name: "{{ storage.partitions.boot.name }}"
+    number: "{{ storage.partitions.boot.number }}"
+    unit: MiB
+    part_start: 0%
+    part_end: "{{ storage.partitions.boot.size + 1 }}MiB"
+    state: present
+  when: storage.label == "gpt"
+
+- name: Creating the boot partition
+  ansible.builtin.parted:
+    device: "{{ storage.install }}"
+    label: "{{ storage.label }}"
+    number: "{{ storage.partitions.boot.number }}"
+    unit: MiB
+    part_start: 0%
+    part_end: "{{ storage.partitions.boot.size + 1 }}MiB"
+    part_type: primary
+    state: present
+  when: storage.label == "msdos"
+
+- name: Creating the swap partition
+  ansible.builtin.parted:
+    device: "{{ storage.install }}"
+    label: "{{ storage.label }}"
+    name: "{{ storage.partitions.swap.name }}"
+    number: "{{ storage.partitions.swap.number }}"
+    unit: MiB
+    part_start: "{{ storage.partitions.boot.size + 1 }}MiB"
+    part_end: "{{ storage.partitions.swap.size + 1 + storage.partitions.boot.size }}MiB"
+    state: present
+  when: storage.label == "gpt"
+
+- name: Creating the swap partition
+  ansible.builtin.parted:
+    device: "{{ storage.install }}"
+    label: "{{ storage.label }}"
+    number: "{{ storage.partitions.swap.number }}"
+    unit: MiB
+    part_start: "{{ storage.partitions.boot.size + 1 }}MiB"
+    part_end: "{{ storage.partitions.swap.size + 1 + storage.partitions.boot.size }}MiB"
+    state: present
+  when: storage.label == "msdos"
+
+- name: Creating the root partition
+  ansible.builtin.parted:
+    device: "{{ storage.install }}"
+    label: "{{ storage.label }}"
+    name: "{{ storage.partitions.root.name }}"
+    number: "{{ storage.partitions.root.number }}"
+    unit: "%"
+    part_start: "{{ storage.partitions.swap.size + 1 + storage.partitions.boot.size + 1}}MiB"
+    part_end: "{{ storage.partitions.root.size }}%"
+    state: present
+  when: storage.label == "gpt"
+
+- name: Creating the root partition
+  ansible.builtin.parted:
+    device: "{{ storage.install }}"
+    label: "{{ storage.label }}"
+    number: "{{ storage.partitions.root.number }}"
+    unit: "%"
+    part_start: "{{ storage.partitions.swap.size + 1 + storage.partitions.boot.size + 1}}MiB"
+    part_end: "{{ storage.partitions.root.size }}%"
+    state: present
+  when: storage.label == "msdos"

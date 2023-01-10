@@ -1,0 +1,14 @@
+- name: Make license directory
+  ansible.builtin.file:
+    path: /mnt/gentoo/etc/portage/package.license
+    state: directory
+
+- name: Make app license directory
+  ansible.builtin.file:
+    path: /mnt/gentoo/etc/portage/package.license/apps
+    state: directory
+
+- name: Put license
+  ansible.builtin.template:
+    src: discord.j2
+    dest: /mnt/gentoo/etc/portage/package.license/apps/discord 

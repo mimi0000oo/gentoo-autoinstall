@@ -1,0 +1,8 @@
+- name: Unpack
+  ansible.builtin.unarchive:
+    src: /mnt/gentoo/stage3.tar.xz
+    dest: /mnt/gentoo/
+    extra_opts:
+      - --xattrs-include='*.*' 
+      - --numeric-owner
+    remote_src: yes

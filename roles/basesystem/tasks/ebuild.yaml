@@ -1,0 +1,12 @@
+- name: Make repos.conf directory
+  ansible.builtin.file:
+    path: /mnt/gentoo/etc/portage/repos.conf
+    state: directory
+
+- name: Copy repos.conf
+  ansible.builtin.copy:
+    dest: /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+    src: /mnt/gentoo/usr/share/portage/config/repos.conf
+    remote_src: yes
+
+  

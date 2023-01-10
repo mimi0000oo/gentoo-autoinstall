@@ -1,0 +1,29 @@
+- name: "Alternative: Using genkernel"
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge sys-kernel/genkernel"
+
+- name: Get drive UUIDs
+  block:
+    - name: Get boot UUID
+      ansible.builtin.shell:
+        cmd: blkid | grep {{ install_drive }}{{ boot_partition.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: boot_uuid
+
+    - name: Get swap UUID
+      ansible.builtin.shell:
+        cmd: blkid | grep {{ install_drive }}{{ swap_partition.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: swap_uuid
+
+    - name: Get root UUID
+      ansible.builtin.shell:
+        cmd: blkid | grep {{ install_drive }}{{ root_partition.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: root_uuid
+
+- name: Update fstab
+  ansible.builtin.template:
+    src: fstab.j2
+    dest: /etc/fstab
+
+- name: Generate kernel 
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "genkernel all"

@@ -1,0 +1,8 @@
+- name: Partitioning the disk
+  ansible.builtin.include_tasks: partitioning.yaml
+
+- name: Creating file systems
+  ansible.builtin.include_tasks: filesystems.yaml
+
+- name: Mounting the root partition
+  ansible.builtin.include_tasks: mountroot.yaml

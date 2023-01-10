@@ -1,0 +1,5 @@
+- name: Copy DNS info
+  ansible.builtin.copy:
+    dest: /mnt/gentoo/etc/
+    src: /etc/resolv.conf
+    follow: yes

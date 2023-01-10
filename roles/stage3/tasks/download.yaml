@@ -1,0 +1,15 @@
+- name: Get the stage3 tarball link
+  ansible.builtin.uri:
+    url: https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/latest-stage3.txt
+    return_content: yes
+  register: get_url
+
+- name: Register stage3_download
+  ansible.builtin.shell:
+    cmd: "echo \"{{ get_url.content }}\" | grep -m1 stage3-amd64-openrc | awk {' print $1 '}"
+  register: stage3_archive
+
+- name: Download the stage3 tarball
+  ansible.builtin.get_url:
+    url: https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/{{ stage3_archive.stdout }}
+    dest: /mnt/gentoo/stage3.tar.xz

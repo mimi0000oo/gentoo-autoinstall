@@ -1,0 +1,7 @@
+all:
+  hosts:
+    example:
+      ansible_user: example_user
+      ansible_host: example_host
+      ansible_ssh_pass: this+is-a+strong_one
+

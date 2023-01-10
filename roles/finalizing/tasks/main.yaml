@@ -1,0 +1,5 @@
+- name: User administration
+  ansible.builtin.include_tasks: users.yaml
+
+- name: Disk cleanup
+  ansible.builtin.include_tasks: cleanup.yaml

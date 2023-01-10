@@ -1,0 +1,11 @@
+- name: Adding a user for daily use 
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "useradd -m -G {{ user.groups }} -s /bin/bash {{ user.name }}"
+
+- name: Set a user password
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "echo -e '{{ user.password }}\\n{{ user.password }}' | passwd {{ user.name }}"
+
+- name: Set a root password
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "echo -e '{{ user.password }}\\n{{ user.password }}' | passwd root"

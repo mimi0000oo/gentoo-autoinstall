@@ -1,0 +1,7 @@
+- name: Installing gentoo sources
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge sys-kernel/gentoo-sources"
+
+- name: Select kernel 
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "eselect kernel set 1"

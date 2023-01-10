@@ -1,0 +1,8 @@
+- name: Downloading the stage tarball
+  ansible.builtin.include_tasks: download.yaml
+
+- name: Unpacking the stage tarball
+  ansible.builtin.include_tasks: unpack.yaml
+
+- name: Configuring compile options
+  ansible.builtin.include_tasks: compileopts.yaml

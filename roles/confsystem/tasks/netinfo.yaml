@@ -1,0 +1,20 @@
+- name: Host and domain information
+  ansible.builtin.template:
+    src: hostname.j2
+    dest: /mnt/gentoo/etc/conf.d/hostname
+
+- name: Network 
+  block:
+    - name: Install dhcpcd
+      ansible.builtin.shell:
+        cmd: chroot /mnt/gentoo sh -c "emerge net-misc/dhcpcd"
+
+    - name: Add dhcpcd to OpenRC
+      ansible.builtin.shell:
+        cmd: chroot /mnt/gentoo sh -c "rc-update add dhcpcd default"
+
+- name: The hosts file
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /mnt/gentoo/etc/hosts
+

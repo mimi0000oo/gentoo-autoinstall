@@ -1,0 +1,23 @@
+- name: Installing a Gentoo ebuild repository snapshot from the web
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge --sync" 
+
+- name: Choosing the right profile
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "eselect profile set {{ portage_options.profile }}"
+
+- name: Updating the @world set
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge --verbose --update --deep --newuse @world"
+
+- name: CPU_FLAGS_* install
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge app-portage/cpuid2cpuflags"
+      
+- name: CPU_FLAGS_ file
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "touch /etc/portage/package.use/CPU_FLAGS"
+
+- name: CPU_FLAGS_* setup
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/CPU_FLAGS"

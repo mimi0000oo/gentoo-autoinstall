@@ -1,0 +1,26 @@
+- name: Emerge alsa
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge media-sound/alsa-utils"
+
+- name: Create sound directory in package.use
+  ansible.builtin.file:
+    path: /mnt/gentoo/etc/portage/package.use/sound
+
+- name: Put pipewire package.use
+  ansible.builtin.template:
+    src: pipewire.j2
+    dest: /mnt/gentoo/etc/portage/package.use/sound/pipewire
+
+- name: Put pipewire package.use
+  ansible.builtin.template:
+    src: pulseaudio.j2
+    dest: /mnt/gentoo/etc/portage/package.use/sound/pipewire
+
+- name: Emerge pipewire
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge media-video/pipewire"
+
+- name: Emerge wireplumber 
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge media-video/wireplumber"
+

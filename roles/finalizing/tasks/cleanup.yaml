@@ -1,0 +1,3 @@
+- name: Remove tarballs
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "rm /stage3.tar.xz"

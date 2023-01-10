@@ -1,0 +1,27 @@
+- name: Mount proc
+  ansible.builtin.shell:
+    cmd: mount --types proc /proc /mnt/gentoo/proc
+
+- name: Mount sys --rbind
+  ansible.builtin.shell:
+    cmd: mount --rbind /sys /mnt/gentoo/sys
+    
+- name: Mount sys --make-rslave
+  ansible.builtin.shell:
+    cmd: mount --make-rslave /mnt/gentoo/sys
+
+- name: Mount dev --rbind
+  ansible.builtin.shell:
+    cmd: mount --rbind /dev /mnt/gentoo/dev
+
+- name: Mount dev --make-rslave
+  ansible.builtin.shell:
+    cmd: mount --make-rslave /mnt/gentoo/dev
+    
+- name: Mount run --bind
+  ansible.builtin.shell:
+    cmd: mount --bind /run /mnt/gentoo/run
+    
+- name: Mount run --make-slave
+  ansible.builtin.shell:
+    cmd: mount --make-slave /mnt/gentoo/run

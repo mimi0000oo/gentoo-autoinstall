@@ -1,0 +1,8 @@
+- name: Put sudoers file
+  ansible.builtin.template:
+    src: sudoers.j2
+    dest: /mnt/gentoo/etc/sudoers
+
+- name: Emerge
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge app-admin/sudo"

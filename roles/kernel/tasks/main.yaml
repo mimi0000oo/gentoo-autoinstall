@@ -1,0 +1,13 @@
+- name: "Optional: Installing firmware and/or microcode"
+  ansible.builtin.include_tasks: firmware.yaml
+
+- name: "Installing the sources"
+  ansible.builtin.include_tasks: sources.yaml
+
+- name: Manual configuration
+  ansible.builtin.include_tasks: manual.yaml
+  when: kernel == "manual"
+
+- name: Genkernel configuration
+  ansible.builtin.include_tasks: genkernel.yaml
+  when: kernel == "genkernel"

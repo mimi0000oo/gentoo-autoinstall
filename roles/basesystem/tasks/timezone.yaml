@@ -1,0 +1,7 @@
+- name: Timezone OpenRC
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "echo '{{ timezone }}' > /etc/timezone"
+
+- name: Timezone OpenRC
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge --config sys-libs/timezone-data"

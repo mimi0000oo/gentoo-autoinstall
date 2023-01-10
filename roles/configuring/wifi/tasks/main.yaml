@@ -1,0 +1,12 @@
+- name: Install wpa_supplicant
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge net-wireless/wpa_supplicant"
+
+- name: Put the wireless configuration file
+  ansible.builtin.template:
+    src: wpa_supplicant.conf.j2
+    dest: /mnt/gentoo/etc/wpa_supplicant/wpa_supplicant.conf
+
+- name: Make wpa_supplicant start default
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "rc-update add wpa_supplicant default"

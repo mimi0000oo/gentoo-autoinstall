@@ -1,0 +1,23 @@
+- name: Gentoo ebuild repository
+  ansible.builtin.include_tasks: ebuild.yaml
+
+- name: Copy DNS info
+  ansible.builtin.include_tasks: dnsinfo.yaml
+
+- name: Mounting the necessary filesystems
+  ansible.builtin.include_tasks: mount.yaml
+
+- name: Mounting boot
+  ansible.builtin.include_tasks: mboot.yaml
+
+- name: Configuring Portage
+  ansible.builtin.include_tasks: confport.yaml
+
+- name: Timezone
+  ansible.builtin.include_tasks: timezone.yaml
+
+- name: Locale generation
+  ansible.builtin.include_tasks: locale.yaml
+
+- name: Reload environment
+  ansible.builtin.include_tasks: reload.yaml

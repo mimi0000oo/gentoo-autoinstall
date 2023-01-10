@@ -1,0 +1,4 @@
+- name: Replace the make.conf file
+  ansible.builtin.template:
+    src: make.conf.j2
+    dest: /mnt/gentoo/etc/portage/make.conf

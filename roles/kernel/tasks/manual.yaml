@@ -1,0 +1,25 @@
+- name: Install pciutils
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge sys-apps/pciutils"
+
+- name: Put kernel configuration
+  ansible.builtin.template:
+    src: config.j2
+    dest: /mnt/gentoo/usr/src/linux/.config
+
+- name: Make configuration
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "cd /usr/src/linux/; make -j{{ compiling_options.makeopts }} && make modules_install && make install"
+
+- name: Install dracut
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge sys-kernel/dracut"
+
+- name: Get kernel version
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "eselect kernel list | grep '\[1\]' | awk {' print \$2 '} | sed s/linux-//"
+  register: kver
+    
+- name: "Optional: Building an initramfs"
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "dracut --force --kver={{ kver.stdout }}" 

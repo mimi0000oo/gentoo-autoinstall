@@ -1,0 +1,29 @@
+- name: Make package.use suckless folder
+  ansible.builtin.file:
+    path: /mnt/gentoo/etc/portage/package.use/suckless
+    state: directory
+
+- name: Place dwm savedconfig
+  ansible.builtin.template:
+    src: dwm.j2
+    dest: /mnt/gentoo/etc/portage/package.use/suckless/dwm
+
+- name: Get dwm version
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo/ sh -c "emerge -pv x11-wm/dwm | grep -m1 'x11-wm/dwm-' | awk {' print \$4 '} | sed s/::gentoo// | sed s/x11-wm\\\///"
+  register: dwmver
+
+- name: Make x11-wm directory
+  ansible.builtin.file:
+    path: /mnt/gentoo/etc/portage/savedconfig/x11-wm
+    state: directory
+
+- name: Put {{ dwmver.stdout }} file
+  ansible.builtin.template:
+    src: dwm-config.j2
+    dest: "/mnt/gentoo/etc/portage/savedconfig/x11-wm/{{ dwmver.stdout }}"
+
+- name: Emerge to apply config 
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "emerge x11-wm/dwm"
+

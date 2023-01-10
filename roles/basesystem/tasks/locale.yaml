@@ -1,0 +1,17 @@
+- name: Locale set
+  ansible.builtin.template:
+    src: locale.gen.j2
+    dest: /mnt/gentoo/etc/locale.gen
+
+- name: Locale gen
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "locale-gen"
+
+- name: Locale selection
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "eselect locale list | grep {{ locale_set }} | sed s/\\\[// | sed s/\\\]// | awk  {' print \$1 '}" 
+  register: glocale
+
+- name: Locale set
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "eselect locale set {{ glocale.stdout }}"
