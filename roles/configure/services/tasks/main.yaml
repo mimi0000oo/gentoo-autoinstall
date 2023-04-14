@@ -1,0 +1,2 @@
+- name: Enable elogind
+  ansible.builtin.include_tasks: elogind.yaml

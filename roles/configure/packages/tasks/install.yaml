@@ -1,0 +1,27 @@
+- name: Install
+  community.general.portage:
+    package:
+      - app-admin/sudo
+      - app-editors/neovim
+      - app-eselect/eselect-repository
+      - app-misc/neofetch
+      - app-portage/emlop
+      - dev-libs/wayland
+      - dev-vcs/git
+      - gui-apps/waybar
+      - gui-apps/wofi
+      - gui-wm/hyprland
+      - lxde-base/lxappearance
+      - media-fonts/fonts-meta
+      - media-fonts/corefonts
+      - media-sound/alsa-utils
+      - media-sound/spotify-adblock
+      - media-video/pipewire
+      - media-video/wireplumber
+      - net-im/discord
+      - net-misc/r8152
+      - sys-fs/fuse:0
+      - sys-process/htop
+      - x11-terms/kitty
+      - www-client/firefox
+    state: present

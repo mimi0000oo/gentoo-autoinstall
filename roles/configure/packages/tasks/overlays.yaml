@@ -1,0 +1,14 @@
+- name: Make sure eselect-repository & git are installed
+  community.general.portage:
+    package:
+      - app-eselect/eselect-repository
+      - dev-vcs/git
+    state: present
+
+- name: Enable overlays
+  ansible.builtin.shell:
+    cmd: eselect repository enable guru gentoo-zh
+
+- name: Sync everything
+  community.general.portage:
+    sync: yes

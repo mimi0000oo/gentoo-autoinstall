@@ -1,21 +1,25 @@
+#
+# system install
+#
+
 user:
-  name: mimi07
-  password: this+is-a+strong_one
-  groups: users,wheel,audio,video
+  name: mimi07 # user name for the system user
+  password: this+is-a+strong_one # your system password
+  groups: users,wheel,audio,video # groups for the previously defined user
 
 storage:
-  install: /dev/sda
+  install: /dev/nvme0n1 # install drive name
   label: gpt # gpt / msdos
   partitions:
     boot:
       name: boot
       number: 1
-      size: 256
+      size: 256 # MiB
       filesystem: vfat
     swap:
       name: swap
       number: 2
-      size: 8192
+      size: 8192 # MiB
       filesystem: swap
     root: 
       name: root
@@ -25,9 +29,9 @@ storage:
 
 compiling_options:
   common_flags: -march=native -O2 -pipe
-  makeopts: 0
+  makeopts: 6
   efi_grub: true
-  use_flags: X elogind -systemd
+  use_flags: wayland X xwayland elogind bluetooth pulseaudio screencast -systemd
   video_cards: intel
   mirrors: http://gentoo.mirrors.ovh.net/gentoo-distfiles/
 
@@ -41,18 +45,17 @@ locale: |
   en_US.UTF-8 UTF-8
 locale_set: en_US.utf8
 
-kernel: manual # manual, genkernel
+kernel: manual # manual
 
 hostname: gentoo
 
 hosts: |
   example.com           example
 
-
 #
-# configuring
+# system configuration (after reboot)
 #
 
 wifi:
-  ssid: "EXAMPLE WIFI NAME"
-  password: "EXAMPLE WIFI PASSWORD"
+  ssid: "example.name"
+  password: "example.password"

@@ -1,0 +1,8 @@
+- name: User administration
+  ansible.builtin.include_tasks: users.yaml
+
+- name: Disk cleanup
+  ansible.builtin.include_tasks: cleanup.yaml
+
+- name: Enable ssh for 2nd stage
+  ansible.builtin.include_tasks: ssh.yaml

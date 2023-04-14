@@ -1,0 +1,28 @@
+- name: Make sure package.accept_keywords directory is present
+  ansible.builtin.file:
+    path: /etc/portage/package.accept_keywords/
+    state: directory
+
+- name: Create video directory
+  ansible.builtin.file:
+    path: /etc/portage/package.accept_keywords/video/
+    state: directory
+
+- name: Place video templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/portage/package.accept_keywords/video/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/unmask/video/*.j2
+
+- name: Create apps directory
+  ansible.builtin.file:
+    path: /etc/portage/package.accept_keywords/apps/
+    state: directory
+
+- name: Place apps templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/portage/package.accept_keywords/apps/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/unmask/apps/*.j2

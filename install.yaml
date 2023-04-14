@@ -1,0 +1,12 @@
+- name: Start the configuration!
+  hosts: all
+  gather_facts: true
+  become: true
+  roles:
+    - name: install/disks
+    - name: install/stage3
+    - name: install/basesystem
+    - name: install/kernel
+    - name: install/confsystem
+    - name: install/bootloader
+    - name: install/finalizing

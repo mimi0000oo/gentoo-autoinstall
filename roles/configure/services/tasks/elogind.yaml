@@ -1,0 +1,3 @@
+- name: Add elogind to boot
+  ansible.builtin.shell:
+    cmd: rc-update add elogind boot

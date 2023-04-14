@@ -1,0 +1,15 @@
+- name: Enable repositories/overlays
+  ansible.builtin.include_tasks: overlays.yaml
+
+- name: Unmask packages
+  ansible.builtin.include_tasks: unmask.yaml
+
+- name: License packages
+  ansible.builtin.include_tasks: license.yaml
+
+- name: Package useflags
+  ansible.builtin.include_tasks: flags.yaml
+
+- name: Install packages
+  ansible.builtin.include_tasks: install.yaml
+

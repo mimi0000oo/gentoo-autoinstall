@@ -1,0 +1,5 @@
+- name: Place use flags
+  ansible.builtin.include_tasks: flags.yaml
+
+- name: Sync everything
+  ansible.builtin.include_tasks: sync.yaml

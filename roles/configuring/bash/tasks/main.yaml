@@ -1,4 +1,0 @@
-- name: Put bash_profile
-  ansible.builtin.template:
-    src: bash_profile.j2
-    dest: /mnt/gentoo/home/{{ user.name }}/.bash_profile 

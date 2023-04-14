@@ -1,0 +1,29 @@
+- name: Make sure package.license directory is present
+  ansible.builtin.file:
+    path: /etc/portage/package.license/
+    state: directory
+
+- name: Create apps directory
+  ansible.builtin.file:
+    path: /etc/portage/package.license/apps/
+    state: directory
+
+- name: Place apps templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/portage/package.license/apps/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/license/apps/*.j2
+
+- name: Create fonts directory
+  ansible.builtin.file:
+    path: /etc/portage/package.license/fonts/
+    state: directory
+
+- name: Place fonts templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/portage/package.license/fonts/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/license/fonts/*.j2
+

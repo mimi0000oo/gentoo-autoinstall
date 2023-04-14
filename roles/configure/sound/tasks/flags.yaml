@@ -1,0 +1,4 @@
+- name: Replace pulseaudio use flags
+  ansible.builtin.template:
+    src: pulseaudio.j2
+    dest: /etc/portage/package.use/sound/pulseaudio

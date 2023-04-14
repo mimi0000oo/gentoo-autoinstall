@@ -1,0 +1,41 @@
+- name: Applying {{ storage.partitions.boot.filesystem }} filesystem to {{ storage.partitions.boot.name }} partition
+  ansible.builtin.filesystem:
+    dev: "{{ storage.install }}{{ storage.partitions.boot.number }}"
+    state: present
+    fstype: "{{ storage.partitions.boot.filesystem }}"
+  when: '"nvme" not in storage.install'
+
+- name: Applying {{ storage.partitions.boot.filesystem }} filesystem to {{ storage.partitions.boot.name }} partition
+  ansible.builtin.filesystem:
+    dev: "{{ storage.install }}p{{ storage.partitions.boot.number }}"
+    state: present
+    fstype: "{{ storage.partitions.boot.filesystem }}"
+  when: '"nvme" in storage.install'
+
+- name: Applying {{ storage.partitions.swap.filesystem }} filesystem to {{ storage.partitions.swap.name }} partition
+  ansible.builtin.filesystem:
+    dev: "{{ storage.install }}{{ storage.partitions.swap.number }}"
+    state: present
+    fstype: "{{ storage.partitions.swap.filesystem }}"
+  when: '"nvme" not in storage.install'
+
+- name: Applying {{ storage.partitions.swap.filesystem }} filesystem to {{ storage.partitions.swap.name }} partition
+  ansible.builtin.filesystem:
+    dev: "{{ storage.install }}p{{ storage.partitions.swap.number }}"
+    state: present
+    fstype: "{{ storage.partitions.swap.filesystem }}"
+  when: '"nvme" in storage.install'
+
+- name: Applying {{ storage.partitions.root.filesystem }} filesystem to {{ storage.partitions.root.name }} partition
+  ansible.builtin.filesystem:
+    dev: "{{ storage.install }}{{ storage.partitions.root.number }}"
+    state: present
+    fstype: "{{ storage.partitions.root.filesystem }}"
+  when: '"nvme" not in storage.install'
+
+- name: Applying {{ storage.partitions.root.filesystem }} filesystem to {{ storage.partitions.root.name }} partition
+  ansible.builtin.filesystem:
+    dev: "{{ storage.install }}p{{ storage.partitions.root.number }}"
+    state: present
+    fstype: "{{ storage.partitions.root.filesystem }}"
+  when: '"nvme" in storage.install'

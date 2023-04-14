@@ -1,3 +1,0 @@
-- name: Install aria2
-  ansible.builtin.shell:
-    cmd: chroot /mnt/gentoo sh -c "emerge net-misc/aria2"

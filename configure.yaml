@@ -1,0 +1,8 @@
+- name: Configure the newly installed system!
+  hosts: localhost
+  gather_facts: true
+  become: true
+  roles:
+    - configure/packages 
+    - configure/services
+    - configure/sound

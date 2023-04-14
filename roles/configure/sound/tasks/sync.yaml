@@ -1,0 +1,7 @@
+- name: Sync portage
+  community.general.portage:
+    changed_use: true
+    update: true
+    deep: true
+    package: "@world"
+

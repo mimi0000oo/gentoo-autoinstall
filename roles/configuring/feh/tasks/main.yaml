@@ -1,3 +1,0 @@
-- name: Emerge
-  ansible.builtin.shell:
-    cmd: chroot /mnt/gentoo sh -c "emerge media-gfx/feh"

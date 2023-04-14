@@ -1,0 +1,40 @@
+- name: Make sure package.use directory is present
+  ansible.builtin.file:
+    path: /etc/portage/package.use/
+    state: directory
+
+- name: Create video directory
+  ansible.builtin.file:
+    path: /etc/portage/package.use/video/
+    state: directory
+
+- name: Place video templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/portage/package.use/video/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/use/video/*.j2
+
+- name: Create sound directory
+  ansible.builtin.file:
+    path: /etc/portage/package.use/sound/
+    state: directory
+
+- name: Place sound templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/portage/package.use/sound/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/use/sound/*.j2
+
+- name: Create apps directory
+  ansible.builtin.file:
+    path: /etc/portage/package.use/apps/
+    state: directory
+
+- name: Place apps templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: /etc/portage/package.use/apps/{{ item | basename | regex_replace('\.j2$', '') }}
+  with_fileglob:
+    - ../templates/use/apps/*.j2

@@ -1,6 +1,0 @@
-- name: Mounting the boot partition
-  ansible.posix.mount:
-    path: /mnt/gentoo/boot
-    state: mounted
-    src: "{{ storage.install }}{{ storage.partitions.boot.number }}"
-    fstype: vfat

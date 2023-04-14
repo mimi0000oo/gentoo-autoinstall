@@ -1,0 +1,44 @@
+- name: Get drive UUIDs
+  block:
+    - name: Get boot UUID
+      ansible.builtin.shell:
+       cmd: blkid | grep {{ storage.install }}{{ storage.partitions.boot.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: boot_uuid
+      when: '"nvme" not in storage.install'
+
+    - name: Get boot UUID
+      ansible.builtin.shell:
+       cmd: blkid | grep {{ storage.install }}p{{ storage.partitions.boot.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: boot_uuid
+      when: '"nvme" in storage.install'
+
+    - name: Get swap UUID
+      ansible.builtin.shell:
+        cmd: blkid | grep {{ storage.install }}{{ storage.partitions.swap.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: swap_uuid
+      when: '"nvme" not in storage.install'
+
+    - name: Get swap UUID
+      ansible.builtin.shell:
+        cmd: blkid | grep {{ storage.install }}p{{ storage.partitions.swap.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: swap_uuid
+      when: '"nvme" in storage.install'
+
+    - name: Get root UUID
+      ansible.builtin.shell:
+        cmd: blkid | grep {{ storage.install }}{{ storage.partitions.root.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: root_uuid
+      when: '"nvme" not in storage.install'
+
+    - name: Get root UUID
+      ansible.builtin.shell:
+        cmd: blkid | grep {{ storage.install }}p{{ storage.partitions.root.number }} | sed s/.*\ UUID=\"// | sed s/\".*//
+      register: root_uuid
+      when: '"nvme" in storage.install'
+
+- name: Update fstab
+
+- name: Update fstab
+  ansible.builtin.template:
+    src: fstab.j2
+    dest: /mnt/gentoo/etc/fstab

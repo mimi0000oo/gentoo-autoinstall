@@ -1,0 +1,9 @@
+- name: Enable ssh
+  ansible.builtin.shell:
+    cmd: chroot /mnt/gentoo sh -c "rc-update add sshd default"
+
+- name: Replace sshd config 
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: /mnt/gentoo/etc/ssh/sshd_config
+
